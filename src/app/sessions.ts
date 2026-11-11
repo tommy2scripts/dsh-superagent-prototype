@@ -57,9 +57,14 @@ declare module '@deepseek-ai/cordis' {
  * subagents. It gets no other tool the profile has, whenever it was registered: none that asks or shows a person something,
  * changes the profile, schedules work or starts goals outside the worker slots, the pause and a person's hold, starts or
  * messages other Sessions, or edits documents.
+ *
+ * Exception: the SkillOpt-Sleep read-only/staging tools (status, dry-run, harvest, run) are allowed so a worker can check
+ * and preview a sleep cycle. skillopt_adopt, skillopt_schedule and skillopt_unschedule are deliberately NOT here: adopt
+ * applies staged edits to live files and schedule/unschedule touch the host's cron — both stay operator-only.
  */
 const WORK_TOOLS = ['read', 'write', 'edit', 'read_image', 'glob', 'grep', 'bash', 'pwsh', 'job_output', 'job_list', 'job_kill', 'web_search',
-  'web_fetch', 'skill', 'todo_write', 'subagent', 'list_subagent_models', 'send_message', 'list_agents', 'interrupt_agent']
+  'web_fetch', 'skill', 'todo_write', 'subagent', 'list_subagent_models', 'send_message', 'list_agents', 'interrupt_agent',
+  'skillopt_status', 'skillopt_dry_run', 'skillopt_harvest', 'skillopt_run']
 /** What the main Session is told when it would wait: what it waits for comes to it, and a waiting step holds back the next. */
 const NO_WAIT = 'Reports, follow_up notices, new candidates and a background job\'s end with its output arrive by themselves as messages; '
   + 'end the turn instead of waiting for them.'
